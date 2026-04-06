@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>The Shruti Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fff0f3;
+            --text: #2b2d42;
+            --accent: #ff4d6d;
+            --accent-light: #ff758f;
+            --card-bg: rgba(255, 255, 255, 0.75);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Background Heart Animation */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: var(--accent-light);
+            opacity: 0.2;
+            animation: moveUp 10s linear infinite;
+        }
+
+        @keyframes moveUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Hero */
+        #hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        .hero-image-container {
+            width: 180px; height: 180px;
+            border-radius: 50%; padding: 5px;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            margin-bottom: 2rem;
+            animation: gentleHover 6s ease-in-out infinite;
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.2);
+        }
+
+        .hero-image-container img {
+            width: 100%; height: 100%; border-radius: 50%;
+            object-fit: cover; border: 4px solid white;
+        }
+
+        @keyframes gentleHover {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; color: var(--text); letter-spacing: -1px; line-height: 1.1; }
+        h1 span { color: var(--accent); }
+        .hero-subtitle { font-size: clamp(1.1rem, 3vw, 1.4rem); margin-top: 1.5rem; color: #666; max-width: 600px; }
+
+        /* Affirmation Section */
+        #affirmation-section { text-align: center; margin-top: -2rem; padding-bottom: 5rem; }
+        .magic-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white; border: none; padding: 18px 40px; font-size: 1.2rem; font-weight: 700;
+            border-radius: 50px; cursor: pointer; box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
+            transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .magic-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(255, 77, 109, 0.4); }
+        .magic-btn:active { transform: translateY(2px); }
+        #affirmation-display { font-size: 1.4rem; font-weight: 600; color: var(--text); margin-top: 2rem; min-height: 60px; font-style: italic; transition: opacity 0.3s; padding: 0 1.5rem; }
+
+        /* Sections General */
+        section { padding: 4rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: clamp(1.8rem, 7vw, 2.5rem); color: var(--accent); margin-bottom: 1rem; }
+        .section-desc { text-align: center; margin-bottom: 3rem; color: #666; }
+
+        /* Traits Grid */
+        .traits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .trait-card { padding: 2rem; text-align: center; transition: transform 0.3s ease; }
+        .trait-card:hover { transform: translateY(-8px); }
+        .trait-card h3 { color: var(--accent); margin-bottom: 1rem; font-size: 1.4rem; }
+
+        /* Quiz Section */
+        #quiz-section { background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%); color: white; border-radius: 40px; margin: 2rem 1rem; padding: 4rem 1.5rem; }
+        #quiz-section .section-title { color: white; }
+        .quiz-container { max-width: 600px; margin: 0 auto; padding: 2.5rem 2rem; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
+        .quiz-question { font-size: 1.3rem; font-weight: 600; margin-bottom: 2rem; text-align: center; line-height: 1.4; }
+        .quiz-options { display: flex; flex-direction: column; gap: 1rem; }
+        .quiz-btn { padding: 18px; border: none; border-radius: 15px; background: white; color: var(--accent); font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.2s; }
+        .quiz-btn:active { transform: scale(0.95); }
+        .quiz-btn:hover { background: #ffe4e1; }
+
+        /* Timeline */
+        .timeline-item { display: flex; margin-bottom: 2rem; opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        .timeline-item.visible { opacity: 1; transform: translateY(0); }
+        .timeline-icon { width: 50px; height: 50px; background: var(--accent); color: white; border-radius: 15px; display: flex; justify-content: center; align-items: center; font-size: 1.4rem; flex-shrink: 0; margin-right: 1.2rem; }
+        .timeline-content { padding: 1.5rem; width: 100%; }
+
+        /* Gallery */
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .photo-frame { aspect-ratio: 1/1; border-radius: 24px; overflow: hidden; position: relative; border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-caption { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(255, 77, 109, 0.9); color: white; padding: 12px; font-weight: 500; }
+
+        .shayari { font-family: 'Tiro Devanagari Hindi', serif; font-size: clamp(1.3rem, 6vw, 1.7rem); text-align: center; padding: 2.5rem; }
+
+        /* Footer */
+        footer { text-align: center; padding: 3rem; color: #888; font-weight: 500; }
+
+        @media (max-width: 600px) {
+            .timeline-item { flex-direction: column; }
+            .timeline-icon { margin-bottom: -15px; margin-left: 15px; z-index: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="heart-bg"></div>
+
+    <section id="hero">
+        <div class="hero-image-container">
+            <img src="heroimage.JPG" alt="Shruti" onerror="this.src='https://via.placeholder.com/200/ff758f/ffffff?text=Shruti'">
+        </div>
+        <h1>The One & Only,<br><span>Shruti.</span></h1>
+        <p class="hero-subtitle">Corporate powerhouse, math wizard, aesthetic queen, and professional Sunday-sleeper.</p>
+    </section>
+
+    <section id="affirmation-section">
+        <button class="magic-btn" onclick="generateAffirmation()">
+            ✨ Tap for Main Character Energy
+        </button>
+        <div id="affirmation-display"></div>
+    </section>
+
+    <section id="dedication">
+        <div class="glass">
+            <p class="shayari">
+                तेरी काबिलियत के चर्चे तो हर जुबां पर हैं,<br>
+                तू वो सितारा है, जिसकी जगह बस आसमां पर है।
+            </p>
+        </div>
+    </section>
+
+    <section id="traits">
+        <h2 class="section-title">Why Shruti is Basically Superhuman ✨</h2>
+        <p class="section-desc">Proof that you are incredible.</p>
+        <div class="traits-grid">
+            <div class="trait-card glass">
+                <h3>The Brains 🧠</h3>
+                <p>From complex Mathematics at JMC to corporate strategy at Reliance, she handles it all with ease.</p>
+            </div>
+            <div class="trait-card glass">
+                <h3>The Style 👗</h3>
+                <p>Always impeccable. Whether it's a normal meeting or a evening walk, the aesthetic is always excellent.</p>
+            </div>
+            <div class="trait-card glass">
+                <h3>The Vibe 🌟</h3>
+                <p>An infectious energy that immediately makes any room brighter. Pure main-character energy.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline">
+        <h2 class="section-title">The Journey So Far 🗺️</h2>
+        <div class="timeline-item">
+            <div class="timeline-icon">📐</div>
+            <div class="timeline-content glass">
+                <h3>Jesus and Mary College</h3>
+                <p>Mastering Mathematics with honors and proving that logic is her superpower.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-icon">🎓</div>
+            <div class="timeline-content glass">
+                <h3>IIT Delhi</h3>
+                <p>The MBA era. Late-night cases, fierce networking, and conquering the prestigious red brick walls.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-icon">💼</div>
+            <div class="timeline-content glass">
+                <h3>Reliance, Mumbai</h3>
+                <p>Thriving in the city of dreams. Making big moves and showing the corporate world how it's done.</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="quiz-section">
+        <h2 class="section-title">The Ultimate Shruti Quiz 🎯</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">Let's see who really pays attention!</p>
+        <div class="quiz-container glass" id="quiz-box">
+            </div>
+    </div>
+
+    <section id="gallery">
+        <h2 class="section-title">A treasury of beautiful memories 📸</h2>
+        <p class="section-desc">Because some moments are too precious to let fade!</p>
+        <div class="photo-grid">
+            <div class="photo-frame">
+                <img src="image1.JPG" alt="Fun" onerror="this.src='https://via.placeholder.com/400/ff758f/ffffff?text=Fun+Moments'">
+                <div class="photo-caption">Epic Fun</div>
+            </div>
+            <div class="photo-frame">
+                <img src="image2.JPG" alt="Grad" onerror="this.src='https://via.placeholder.com/400/ff758f/ffffff?text=Iconic'">
+                <div class="photo-caption">Unforgettable Days</div>
+            </div>
+            <div class="photo-frame">
+                <img src="image3.JPG" alt="IITD" onerror="this.src='https://via.placeholder.com/400/ff758f/ffffff?text=IITD+Diaries'">
+                <div class="photo-caption">IIT Delhi Diaries</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Built with ❤️ by a very proud friend.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // 1. Generate Floating Hearts Background
+        const heartContainer = document.getElementById('heart-bg');
+        const heartEmojis = ['❤️', '✨', '🌸', '💖'];
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart-particle';
+            heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 8 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heartContainer.appendChild(heart);
+        }
+
+        // 2. Intersection Observer for Scroll Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.timeline-item').forEach((item) => observer.observe(item));
+
+        // 3. Affirmation Generator Logic (Sequential with random start)
+        const affirmations = [
+            "You survived IIT Delhi, you can literally survive anything today.",
+            "Reminder: You are the smartest person in the room right now.",
+            "Your aesthetic is a solid 11/10 today.",
+            "Treat yourself to some premium vegetarian food today, you've earned it.",
+            "Mumbai is lucky to have you. Go conquer!",
+            "Take a deep breath, you're doing incredibly well.",
+            "Your Sunday sleep schedule is perfectly justified. Don't let anyone tell you otherwise."
+        ];
+        
+        // Pick a random starting point when the page loads
+        let currentAffirmationIndex = Math.floor(Math.random() * affirmations.length);
+
+        function generateAffirmation() {
+            const display = document.getElementById('affirmation-display');
+            display.style.opacity = 0;
+            
+            setTimeout(() => {
+                // Display the quote at the current index
+                const text = affirmations[currentAffirmationIndex];
+                display.innerText = `"${text}"`;
+                display.style.opacity = 1;
+                confetti({ particleCount: 30, spread: 40, origin: { y: 0.8 }, colors: ['#ff4d6d', '#ff758f'] });
+                
+                // Move to the next quote sequentially, loop back to 0 if at the end
+                currentAffirmationIndex = (currentAffirmationIndex + 1) % affirmations.length;
+            }, 300);
+        }
+
+        // 4. The Multi-Question Quiz Engine
+        const quizData = [
+            {
+                question: "What is Shruti's absolute favorite way to spend a Sunday?",
+                options: [
+                    "Waking up early for an intense workout",
+                    "Watching a movie with excellent food",
+                    "Solving extra Math problems for fun"
+                ],
+                correctIndex: 1,
+                successMsg: "You clearly know her priorities. Comfort is key! 🍕📺",
+                failMsg: "She definitely prefers her relaxation time."
+            },
+            {
+                question: "If you're taking Shruti out for dinner, what is her ultimate food vibe?",
+                options: [
+                    "Devouring a heavy non-veg platter",
+                    "Surviving purely on street food",
+                    "100% pure Vegetarian delights"
+                ],
+                correctIndex: 2,
+                successMsg: "Green veggies only! 🥗✨",
+                failMsg: "Do you even know her? She's strictly vegetarian! 🥦"
+            },
+            {
+                question: "Catch Shruti on a smoke break?",
+                options: [
+                    "Nope, she is the fire—no cigarettes needed.",
+                    "Only when corporate life gets too stressful.",
+                    "Yes, puffing away like a chimney."
+                ],
+                correctIndex: 0,
+                successMsg: "Healthy lungs and high standards only! 🔥🚭",
+                failMsg: "Absolutely not. She stays miles away from that! 🚭"
+            },
+            {
+                question: "Despite totally conquering Mumbai, what is her biggest undeniable truth?",
+                options: [
+                    "She secretly enjoys the Mumbai local trains.",
+                    "She's a fierce nomad who never looks back.",
+                    "She is a massive, unapologetic homesick queen."
+                ],
+                correctIndex: 2,
+                successMsg: "You can take the girl out of home, but you can't take home out of the girl! 🏠❤️",
+                failMsg: "She might be a boss in Mumbai, but she misses home 24/7! 🥺"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function renderQuestion() {
+            const quizBox = document.getElementById('quiz-box');
+            
+            // Check if quiz is finished
+            if (currentQuestionIndex >= quizData.length) {
+                let finalMessage = score === quizData.length 
+                    ? "Flawless victory! You are definitely her true friend! 🎉" 
+                    : "Not bad, but maybe you need to hang out with her a little more! 😂";
+
+                quizBox.innerHTML = `
+                    <div style="text-align: center;">
+                        <h3 style="font-size: 2.2rem; margin-bottom: 1rem;">Quiz Complete! 🏆</h3>
+                        <p style="font-size: 1.3rem; font-weight: bold;">You scored ${score} out of ${quizData.length}!</p>
+                        <p style="margin-top: 10px; font-size: 1.1rem;">${finalMessage}</p>
+                        <button onclick="resetQuiz()" class="quiz-btn" style="margin-top: 2rem; padding: 12px 30px;">Play Again 🔄</button>
+                    </div>
+                `;
+
+                if (score >= 3) {
+                    confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 }, colors: ['#ff4d6d', '#ff758f', '#ffffff'] });
+                }
+                return;
+            }
+
+            // Render current question
+            const q = quizData[currentQuestionIndex];
+            let optionsHtml = '';
+            q.options.forEach((opt, index) => {
+                optionsHtml += `<button class="quiz-btn" onclick="handleAnswer(${index})">${['A', 'B', 'C'][index]}) ${opt}</button>`;
+            });
+
+            quizBox.innerHTML = `
+                <div style="text-align: center; margin-bottom: 1rem; font-size: 0.9rem; opacity: 0.8;">Question ${currentQuestionIndex + 1} of ${quizData.length}</div>
+                <div class="quiz-question">${q.question}</div>
+                <div class="quiz-options">
+                    ${optionsHtml}
+                </div>
+            `;
+        }
+
+        function handleAnswer(selectedIndex) {
+            const q = quizData[currentQuestionIndex];
+            const quizBox = document.getElementById('quiz-box');
+            const isCorrect = selectedIndex === q.correctIndex;
+            
+            if (isCorrect) {
+                score++;
+                confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 }, colors: ['#ff4d6d', '#ff758f', '#ffffff'] });
+            }
+
+            const buttonText = currentQuestionIndex === quizData.length - 1 ? 'See Results 📊' : 'Next Question ➡️';
+
+            quizBox.innerHTML = `
+                <div style="text-align: center;">
+                    <h3 style="font-size: 2.2rem; margin-bottom: 1rem;">${isCorrect ? 'Spot On! 🎉' : 'Oof, Wrong! ❌'}</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.5;">${isCorrect ? q.successMsg : q.failMsg}</p>
+                    <button onclick="nextQuestion()" class="quiz-btn" style="margin-top: 2rem; padding: 12px 30px;">${buttonText}</button>
+                </div>
+            `;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            renderQuestion();
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            renderQuestion();
+        }
+
+        // Initialize Quiz on page load
+        renderQuestion();
+    </script>
+</body>
+</html>
